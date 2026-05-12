@@ -130,6 +130,7 @@
     <ClCompile Include="CoreBigInt.cpp" />
     <ClCompile Include="function_lab1.cpp" />
     <ClCompile Include="gcd_lcm.cpp" />
+    <ClCompile Include="ModAddSub.cpp" />
     <ClCompile Include="Srom_lab2.cpp" />
   </ItemGroup>
   <ItemGroup>
