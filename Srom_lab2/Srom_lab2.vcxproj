@@ -133,6 +133,7 @@
     <ClCompile Include="gcd_lcm.cpp" />
     <ClCompile Include="ModAddSub.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModMulPow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h" />

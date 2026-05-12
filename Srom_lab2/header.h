@@ -38,3 +38,7 @@ int GetBlockLength(BigInt A);
 BigInt KillLastDigits(BigInt X, int k);
 BigInt mu_const(BigInt N);
 BigInt BarrettReduction(BigInt X, BigInt N, BigInt mu);
+
+BigInt LongModMul(BigInt A, BigInt B, BigInt N, BigInt mu);
+BigInt LongModSquare(BigInt A, BigInt N, BigInt mu);
+BigInt LongModPowerBarrett(BigInt A, BigInt B, BigInt N);
