@@ -1,6 +1,5 @@
 #include "header.h"
 
-
 int main() {
 	string hex1 = "";
 	string hex2 = "";

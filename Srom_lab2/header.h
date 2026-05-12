@@ -31,5 +31,6 @@ BigInt LongMul(BigInt A, BigInt B);
 BigInt LongSquare(BigInt A);
 BigInt LongShiftBitsToHigh(BigInt B, int shift);
 void LongDivMod(BigInt A, BigInt B, BigInt& Q, BigInt& R);
-BigInt LongPower(BigInt A, BigInt B);
-void printBoth(const string& text, ofstream& file);
+
+BigInt LongGCD(BigInt A, BigInt B);
+BigInt LongLCM(BigInt A, BigInt B);
