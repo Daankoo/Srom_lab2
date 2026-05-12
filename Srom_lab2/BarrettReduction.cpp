@@ -1,6 +1,6 @@
-#include "header.h"
+ï»¿#include "header.h"
 
-// Ğàõóº ê³ëüñòü öèôğ (áëîê³â
+// Ğ Ğ°Ñ…ÑƒÑ” ĞºÑ–Ğ»ÑŒÑÑ‚ÑŒ Ñ†Ğ¸Ñ„Ñ€ (Ğ±Ğ»Ğ¾ĞºÑ–Ğ²
 int GetBlockLength(BigInt A) {
     for (int i = 63; i >= 0; i--) {
         if (A.box64[i] != 0) {
@@ -10,12 +10,12 @@ int GetBlockLength(BigInt A) {
     return 0;
 }
 
-// Ä³ëåííÿ íà ?^k (çñóâ áëîê³â)
-BigInt ShiftBlocksRight(BigInt X, int k) {
+// Ğ”Ñ–Ğ»ĞµĞ½Ğ½Ñ Ğ½Ğ° b^k (Ğ·ÑÑƒĞ² Ğ±Ğ»Ğ¾ĞºÑ–Ğ²)
+BigInt KillLastDigits(BigInt X, int k) {
     BigInt res;
 
-    if (k >= 64) {
-        return res;
+    if (k < 0 || k >= 64) {
+        return res; 
     }
 
     for (int i = 0; i < 64 - k; i++) {
@@ -25,7 +25,7 @@ BigInt ShiftBlocksRight(BigInt X, int k) {
     return res;
 }
 
-// ? = ??^(2k) / N?
+// mu = b^(2k) / N
 BigInt mu_const(BigInt N) {
     int k = GetBlockLength(N);
     BigInt basePower;
@@ -42,4 +42,32 @@ BigInt mu_const(BigInt N) {
     LongDivMod(basePower, N, Q, R);
 
     return Q;
+}
+
+// Ğ ĞµĞ´ÑƒĞºÑ†Ñ–Ñ Ğ·Ğ° Ğ‘Ğ°Ñ€Ñ€ĞµÑ‚Ñ‚Ğ¾Ğ¼
+BigInt BarrettReduction(BigInt X, BigInt N, BigInt mu) {
+  
+    int k = GetBlockLength(N);
+
+    if (k == 0) return BigInt();
+
+    BigInt q1;
+    if (k - 1 > 0) {
+        q1 = KillLastDigits(X, k - 1);
+    }
+    else {
+        q1 = X;
+    }
+
+    BigInt q2 = LongMul(q1, mu);
+
+    BigInt q3 = KillLastDigits(q2, k + 1);
+    BigInt q3_n = LongMul(q3, N);
+    BigInt r = LongSub(X, q3_n);
+
+    while (LongCmp(r, N) >= 0) { 
+        r = LongSub(r, N); 
+    }
+
+    return r;
 }

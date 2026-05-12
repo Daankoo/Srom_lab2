@@ -36,4 +36,5 @@ BigInt LongGCD(BigInt A, BigInt B);
 BigInt LongLCM(BigInt A, BigInt B);
 int GetBlockLength(BigInt A);
 BigInt KillLastDigits(BigInt X, int k);
-BigInt PrecomputeMu(BigInt N);
+BigInt mu_const(BigInt N);
+BigInt BarrettReduction(BigInt X, BigInt N, BigInt mu);
