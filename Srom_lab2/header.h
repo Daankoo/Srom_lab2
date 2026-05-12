@@ -42,3 +42,6 @@ BigInt BarrettReduction(BigInt X, BigInt N, BigInt mu);
 BigInt LongModMul(BigInt A, BigInt B, BigInt N, BigInt mu);
 BigInt LongModSquare(BigInt A, BigInt N, BigInt mu);
 BigInt LongModPowerBarrett(BigInt A, BigInt B, BigInt N);
+
+BigInt LongModAdd(BigInt A, BigInt B, BigInt N);
+BigInt LongModSub(BigInt A, BigInt B, BigInt N);

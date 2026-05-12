@@ -1,0 +1,10 @@
+
+=== BLOCK 3: PERFORMANCE BENCHMARKS (IN MILLISECONDS) ===
+------------------------------------------------
+LongGCD                  | 1.196009 ms
+LongLCM                  | 17.430974 ms
+LongModAdd               | 0.000429 ms
+LongModSub               | 0.000900 ms
+LongModMul (Barrett)     | 0.171867 ms
+LongModSquare (Barrett)  | 0.123480 ms
+LongModPower (Barrett)   | 39.855069 ms

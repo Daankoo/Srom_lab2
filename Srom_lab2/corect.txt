@@ -1,0 +1,10 @@
+=== BLOCK 2: CORRECTNESS VERIFICATION ===
+
+Test 1: (A + B) * C == A * C + B * C (mod N)
+Result: PASSED!
+
+Test 2: 100 * A == A + A + ... + A (mod N)
+Result: PASSED!
+
+Test 3: a^phi(n) == 1 (mod n) for n = 27
+Result: PASSED!
