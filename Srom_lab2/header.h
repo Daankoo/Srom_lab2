@@ -34,3 +34,6 @@ void LongDivMod(BigInt A, BigInt B, BigInt& Q, BigInt& R);
 
 BigInt LongGCD(BigInt A, BigInt B);
 BigInt LongLCM(BigInt A, BigInt B);
+int GetBlockLength(BigInt A);
+BigInt KillLastDigits(BigInt X, int k);
+BigInt PrecomputeMu(BigInt N);

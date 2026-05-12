@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BarrettReduction.cpp" />
     <ClCompile Include="CoreBigInt.cpp" />
     <ClCompile Include="function_lab1.cpp" />
     <ClCompile Include="gcd_lcm.cpp" />

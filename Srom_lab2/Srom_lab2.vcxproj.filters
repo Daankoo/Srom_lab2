@@ -30,6 +30,9 @@
     <ClCompile Include="ModAddSub.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BarrettReduction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">
