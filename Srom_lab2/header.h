@@ -50,12 +50,12 @@ void LongDivMod(BigInt A, BigInt B, BigInt& Q, BigInt& R);
 BigInt LongGCD(BigInt A, BigInt B);
 BigInt LongLCM(BigInt A, BigInt B);
 int GetBlockLength(BigInt A);
-BigInt KillLastDigits(BigInt X, int k);
-BigInt mu_const(BigInt N);
-BigInt BarrettReduction(BigInt X, BigInt N, BigInt mu);
+BigInt129 KillLastDigits129(BigInt129 X, int k);
+BigInt129 mu_const(BigInt N);
+BigInt BarrettReduction(BigInt129 X, BigInt N, BigInt129 mu);
 
-BigInt LongModMul(BigInt A, BigInt B, BigInt N, BigInt mu);
-BigInt LongModSquare(BigInt A, BigInt N, BigInt mu);
+BigInt LongModMul(BigInt A, BigInt B, BigInt N, BigInt129 mu);
+BigInt LongModSquare(BigInt A, BigInt N, BigInt129 mu);
 BigInt LongModPowerBarrett(BigInt A, BigInt B, BigInt N);
 
 BigInt LongModAdd(BigInt A, BigInt B, BigInt N);

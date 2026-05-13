@@ -147,7 +147,6 @@ void LongDivMod(BigInt A, BigInt B, BigInt& Q, BigInt& R) {
 		}
 
 		R = LongSub(R, C);
-
 		Q.SetBit(t - k);
 	}
 }

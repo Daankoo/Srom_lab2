@@ -46,25 +46,22 @@ BigInt129::BigInt129(string hex) {
 string BigInt129::Hex_convert() {
 	string res = "";
 	string Sumbol = "0123456789ABCDEF";
-	bool leadingZeros = true; // Щоб не виводити купу нулів на початку
 
 	for (int i = 128; i >= 0; i--) {
 		uint32_t CurrentBox = box129[i];
+
 		for (int j = 28; j >= 0; j -= 4) {
 			uint32_t bit16 = (CurrentBox >> j) & 0xF;
-			if (bit16 != 0) leadingZeros = false;
-			if (!leadingZeros || (i == 0 && j == 0)) {
-				res += Sumbol[bit16];
-			}
+			res += Sumbol[bit16];
 		}
 	}
-	if (res == "") res = "0";
 	return res;
 }
 
 // множення на 2
 void BigInt129::ShiftLeftOne() {
 	uint32_t PreviousCarry = 0;
+
 	for (int i = 0; i < 129; i++) {
 		uint32_t CurrentCarry = box129[i] >> 31;
 		box129[i] = box129[i] << 1;
@@ -76,7 +73,7 @@ void BigInt129::ShiftLeftOne() {
 // Позиція біта
 int BigInt129::BitLength() {
 	for (int i = 128; i >= 0; i--) {
-		if (box129[i] == 0) continue; // Оптимізація: пропускаємо порожні блоки
+		if (box129[i] == 0) continue; 
 		for (int j = 31; j >= 0; j--) {
 			if ((box129[i] >> j) & 1) {
 				return i * 32 + j + 1;
@@ -87,9 +84,13 @@ int BigInt129::BitLength() {
 }
 
 void BigInt129::SetBit(int bit_number) {
-	if (bit_number < 0 || bit_number >= 4128) return; // 129 * 32 = 4128
+	if (bit_number < 0 || bit_number >= 4128) {
+		return; 
+	}
+	
 	int boxIndex = bit_number / 32;
 	int bitPos = bit_number % 32;
+	
 	box129[boxIndex] |= (1U << bitPos);
 }
 
@@ -104,11 +105,13 @@ int BigInt129::GetBit(int bit_number) {
 BigInt129 LongAdd129(BigInt129 A, BigInt129 B) {
 	BigInt129 C;
 	uint32_t CarryAdd = 0;
+
 	for (int i = 0; i < 129; i++) {
 		uint64_t temp = (uint64_t)A.box129[i] + B.box129[i] + CarryAdd;
 		C.box129[i] = (uint32_t)temp;
 		CarryAdd = temp >> 32;
 	}
+
 	return C;
 }
 
@@ -116,28 +119,40 @@ BigInt129 LongAdd129(BigInt129 A, BigInt129 B) {
 BigInt129 LongSub129(BigInt129 A, BigInt129 B) {
 	BigInt129 C;
 	uint32_t BorrowSub = 0;
+
 	for (int i = 0; i < 129; i++) {
 		int64_t temp = (uint64_t)A.box129[i] - B.box129[i] - BorrowSub;
 		C.box129[i] = (uint32_t)temp;
 		BorrowSub = (temp >> 32) & 1;
 	}
+
 	return C;
 }
 
 // Порівняння 129
 int LongCmp129(BigInt129 A, BigInt129 B) {
 	int i = 128;
+
 	while (i >= 0 && A.box129[i] == B.box129[i]) {
 		i = i - 1;
 	}
-	if (i == -1) return 0;
-	return (A.box129[i] > B.box129[i]) ? 1 : -1;
+
+	if (i == -1) {
+		return 0;
+	}
+	else {
+		if (A.box129[i] > B.box129[i]) {
+			return 1;
+		}
+		else {
+			return -1;
+		}
+	}
 }
 
 // Зсув блоків 129
 BigInt129 LongShiftDigitsToHigh129(BigInt129 A, int shift) {
 	BigInt129 C;
-	if (shift >= 129) return C;
 	for (int i = 0; i < 129 - shift; i++) {
 		C.box129[i + shift] = A.box129[i];
 	}
@@ -157,10 +172,6 @@ BigInt129 LongShiftBitsToHigh129(BigInt129 B, int shift) {
 void LongDivMod129(BigInt129 A, BigInt129 B, BigInt129& Q, BigInt129& R) {
 	int k = B.BitLength();
 	R = A;
-	BigInt129 zero;
-	Q = zero;
-
-	if (k == 0) return; // Ділення на нуль
 
 	while (LongCmp129(R, B) >= 0) {
 		int t = R.BitLength();
@@ -170,6 +181,7 @@ void LongDivMod129(BigInt129 A, BigInt129 B, BigInt129& Q, BigInt129& R) {
 			C = LongShiftBitsToHigh129(B, t - k - 1);
 			t = t - 1;
 		}
+
 		R = LongSub129(R, C);
 		Q.SetBit(t - k);
 	}
@@ -177,10 +189,10 @@ void LongDivMod129(BigInt129 A, BigInt129 B, BigInt129& Q, BigInt129& R) {
 
 // Множення двох BigInt (64) з результатом у BigInt129
 BigInt129 LongMulTo129(BigInt A, BigInt B) {
-	BigInt129 C; // Вже заповнений нулями
+	BigInt129 C; 
 
 	for (int i = 0; i < 64; i++) {
-		if (A.box64[i] == 0) continue; // Пропускаємо множення на нуль
+		if (A.box64[i] == 0) continue; 
 		uint32_t carry = 0;
 		for (int j = 0; j < 64; j++) {
 			uint64_t temp = (uint64_t)C.box129[i + j] + ((uint64_t)A.box64[i] * B.box64[j]) + carry;
@@ -228,8 +240,6 @@ BigInt129 LongSquareTo129(BigInt A) {
 }
 
 // Множення двох BigInt129. 
-// Увага: оскільки масив обмежений 129 блоками, старші розряди відсікаються.
-// Для Барретта цього достатньо, бо ми все одно там відкидаємо розряди.
 BigInt129 LongMul129(BigInt129 A, BigInt129 B) {
 	BigInt129 C;
 	for (int i = 0; i < 129; i++) {

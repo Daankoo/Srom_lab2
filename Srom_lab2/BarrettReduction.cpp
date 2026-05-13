@@ -15,65 +15,72 @@ int GetBlockLength(BigInt A) {
 }
 
 // Ділення на b^k (зсув блоків)
-BigInt KillLastDigits(BigInt X, int k) {
-    BigInt res;
-
-    if (k < 0 || k >= 64) {
-        return res; 
+BigInt129 KillLastDigits129(BigInt129 X, int k) {
+    BigInt129 res;
+    if (k < 0 || k >= 129) {
+        return res;
     }
-
-    for (int i = 0; i < 64 - k; i++) {
-        res.box64[i] = X.box64[i + k];
+    for (int i = 0; i < 129 - k; i++) {
+        res.box129[i] = X.box129[i + k];
     }
-
     return res;
 }
 
 // mu = b^(2k) / N
-BigInt mu_const(BigInt N) {
-    int k = GetBlockLength(N);
-    BigInt basePower;
+BigInt129 mu_const(BigInt N) {
+    int k = GetBlockLength(N); 
+    BigInt129 basePower;
 
-    if (2 * k < 64) {
-        basePower.box64[2 * k] = 1;
+    if (2 * k < 129) {
+        basePower.box129[2 * k] = 1; 
     }
-    //else if (2 * k = 64) {
-    //    basePower.box64[63] = 1;
-    //}
     else {
         cout << "Error mu_const: Module too large!" << endl;
-        return BigInt();
+        return BigInt129();
     }
 
-    BigInt Q, R;
-    LongDivMod(basePower, N, Q, R);
+    BigInt129 N129;
+    for (int i = 0; i < 64; i++) {
+        N129.box129[i] = N.box64[i];
+    }
 
-    return Q;
+    BigInt129 Q, R;
+    LongDivMod129(basePower, N129, Q, R);
+
+    return Q; 
 }
 
 // Редукція за Барреттом
-BigInt BarrettReduction(BigInt X, BigInt N, BigInt mu) {
-  
+BigInt BarrettReduction(BigInt129 X, BigInt N, BigInt129 mu) {
     int k = GetBlockLength(N);
-
     if (k == 0) return BigInt();
 
-    BigInt q1;
+    BigInt129 q1;
     if (k - 1 > 0) {
-        q1 = KillLastDigits(X, k - 1);
+        q1 = KillLastDigits129(X, k - 1);
     }
     else {
         q1 = X;
     }
 
-    BigInt q2 = LongMul(q1, mu);
+    BigInt129 q2 = LongMul129(q1, mu);
+    BigInt129 q3 = KillLastDigits129(q2, k + 1);
 
-    BigInt q3 = KillLastDigits(q2, k + 1);
-    BigInt q3_n = LongMul(q3, N);
-    BigInt r = LongSub(X, q3_n);
+    BigInt129 N129;
+    for (int i = 0; i < 64; i++) {
+        N129.box129[i] = N.box64[i];
+    }
 
-    while (LongCmp(r, N) >= 0) { 
-        r = LongSub(r, N); 
+    BigInt129 q3_n = LongMul129(q3, N129);
+    BigInt129 r129 = LongSub129(X, q3_n);
+
+    while (LongCmp129(r129, N129) >= 0) {
+        r129 = LongSub129(r129, N129);
+    }
+
+    BigInt r;
+    for (int i = 0; i < 64; i++) {
+        r.box64[i] = r129.box129[i];
     }
 
     return r;
