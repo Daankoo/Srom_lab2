@@ -3,6 +3,7 @@
 int main() {
 	string hex1 = "";
 	string hex2 = "";
+	string hex3 = "";
 	string line;
 
 	ifstream Hex1("hex1.txt");
@@ -13,6 +14,12 @@ int main() {
 
 	ifstream Hex2("hex2.txt");
 	if (!Hex2) {
+		cout << "File is not open\n";
+		return -1;
+	}
+
+	ifstream Hex3("hex3.txt");
+	if (!Hex3) {
 		cout << "File is not open\n";
 		return -1;
 	}
@@ -43,9 +50,52 @@ int main() {
 		hex2 += line;
 	}
 
+	while (getline(Hex3, line)) {
+		hex3 += line;
+	}
+
 	Hex1.close();
 	Hex2.close();
+	Hex3.close();
 
+	BigInt A(hex1);
+	BigInt B(hex2);
+	BigInt N(hex3);
+
+	//BigInt A(2);
+	//BigInt B(4);
+	//BigInt N(24);
+
+	BigInt mu = mu_const(N);
+
+
+	cout << "A (mod N):\n" << A.Hex_convert() << "\n\n";
+	cout << "B (mod N):\n" << B.Hex_convert() << "\n\n";
+	cout << "N (Module):\n" << N.Hex_convert() << "\n\n";
+	cout << "mu:\n" << mu.Hex_convert() << "\n\n";
+
+	A = BarrettReduction(A, N, mu);
+	B = BarrettReduction(B, N, mu);
+
+	// (A + B) mod N
+	BigInt ModAddRes = LongModAdd(A, B, N);
+	cout << "(A + B) mod N:\n" << ModAddRes.Hex_convert() << "\n\n";
+
+	// (B - A) mod N
+	BigInt ModSubRes = LongModSub(B, A, N);
+	cout << "(B - A) mod N:\n" << ModSubRes.Hex_convert() << "\n\n";
+
+	cout << GetBlockLength(N);
+
+	// (A * B) mod N
+	BigInt ModMulRes = LongModMul(A, B, N, mu);
+	cout << "(A * B) mod N:\n" << ModMulRes.Hex_convert() << "\n\n";
+
+	// (A ^ B) mod N
+	BigInt ModPowRes = LongModPowerBarrett(A, B, N);
+	cout << "(A ^ B) mod N:\n" << ModPowRes.Hex_convert() << "\n\n";
+
+/*
 	auto printLog = [](const string& text, ofstream& file) {
 		cout << text << endl;
 		file << text << endl;
@@ -150,7 +200,7 @@ int main() {
 	benchmark("LongModPower (Barrett)", [&]() { LongModPowerBarrett(A, B, N); }, iters_slow);
 
 	cout << "\n[SUCCESS] All operations completed. Results written to files." << endl;
-
+	*/
 	Result.close();
 	Corect.close();
 	Time.close();

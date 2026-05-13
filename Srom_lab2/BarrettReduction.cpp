@@ -31,8 +31,11 @@ BigInt mu_const(BigInt N) {
     BigInt basePower;
 
     if (2 * k < 64) {
-        basePower.box64[2 * k] = 1;
+        basePower.box64[(2 * k)] = 1;
     }
+    //else if (2 * k == 64) {
+    //    basePower.box64[(2 * k) - 1] = 1;
+    //}
     else {
         cout << "Error mu_const: Module too large!" << endl;
         return BigInt();
