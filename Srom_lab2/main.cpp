@@ -62,20 +62,16 @@ int main() {
 	BigInt B(hex2);
 	BigInt N(hex3);
 
-	//BigInt A(2);
-	//BigInt B(4);
-	//BigInt N(24);
-
 	BigInt mu = mu_const(N);
 
-
+	A = BarrettReduction(A, N, mu);
+	B = BarrettReduction(B, N, mu);
 	cout << "A (mod N):\n" << A.Hex_convert() << "\n\n";
 	cout << "B (mod N):\n" << B.Hex_convert() << "\n\n";
 	cout << "N (Module):\n" << N.Hex_convert() << "\n\n";
 	cout << "mu:\n" << mu.Hex_convert() << "\n\n";
 
-	A = BarrettReduction(A, N, mu);
-	B = BarrettReduction(B, N, mu);
+
 
 	// (A + B) mod N
 	BigInt ModAddRes = LongModAdd(A, B, N);

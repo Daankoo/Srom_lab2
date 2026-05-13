@@ -9,11 +9,26 @@ using namespace std;
 
 class BigInt {
 public:
-	uint32_t box64[64]; // блок з 64 цифр, де кожна цифра це число розміром 32 біти
+	uint32_t box64[]; // блок з 64 цифр, де кожна цифра це число розміром 32 біти
 
 	BigInt();
 	BigInt(uint32_t a);
 	BigInt(string hex);
+
+	void ShiftLeftOne();
+	string Hex_convert();
+	int BitLength();
+	void SetBit(int bit_number);
+	int GetBit(int bit_number);
+};
+
+class BigInt129 {
+public:
+	uint32_t box129[];
+
+	BigInt129();
+	BigInt129(uint32_t a);
+	BigInt129(string hex);
 
 	void ShiftLeftOne();
 	string Hex_convert();
@@ -44,4 +59,16 @@ BigInt LongModSquare(BigInt A, BigInt N, BigInt mu);
 BigInt LongModPowerBarrett(BigInt A, BigInt B, BigInt N);
 
 BigInt LongModAdd(BigInt A, BigInt B, BigInt N);
-BigInt LongModSub(BigInt A, BigInt B, BigInt N);
+
+// 129
+
+BigInt129 LongAdd129(BigInt129 A, BigInt129 B);
+BigInt129 LongSub129(BigInt129 A, BigInt129 B);
+int LongCmp129(BigInt129 A, BigInt129 B);
+BigInt129 LongShiftDigitsToHigh129(BigInt129 A, int shift);
+BigInt129 LongShiftBitsToHigh129(BigInt129 B, int shift);
+void LongDivMod129(BigInt129 A, BigInt129 B, BigInt129& Q, BigInt129& R);
+BigInt129 LongMul129(BigInt129 A, BigInt129 B);
+
+BigInt129 LongMulTo129(BigInt A, BigInt B);
+BigInt129 LongSquareTo129(BigInt A);

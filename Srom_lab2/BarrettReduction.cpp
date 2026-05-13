@@ -1,10 +1,14 @@
 ﻿#include "header.h"
 
+// 129 комірок 
+// зробити клас даб інт 
+// і зробити всі опереації під це обмеження 
+
 // Рахує кільсть цифр (блоків
 int GetBlockLength(BigInt A) {
     for (int i = 63; i >= 0; i--) {
         if (A.box64[i] != 0) {
-            return i + 1;
+            return i+1;
         }
     }
     return 0;
@@ -31,10 +35,10 @@ BigInt mu_const(BigInt N) {
     BigInt basePower;
 
     if (2 * k < 64) {
-        basePower.box64[(2 * k)] = 1;
+        basePower.box64[2 * k] = 1;
     }
-    //else if (2 * k == 64) {
-    //    basePower.box64[(2 * k) - 1] = 1;
+    //else if (2 * k = 64) {
+    //    basePower.box64[63] = 1;
     //}
     else {
         cout << "Error mu_const: Module too large!" << endl;
