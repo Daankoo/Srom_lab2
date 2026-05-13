@@ -80,7 +80,9 @@ BigInt BarrettReduction(BigInt129 X, BigInt N, BigInt129 mu) {
 
     BigInt r;
     for (int i = 0; i < 64; i++) {
-        r.box64[i] = r129.box129[i];
+        if (i > -1) {
+            r.box64[i] = r129.box129[i];
+        }
     }
 
     return r;

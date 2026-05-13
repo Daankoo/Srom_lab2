@@ -10,7 +10,8 @@ BigInt LongModMul(BigInt A, BigInt B, BigInt N, BigInt129 mu) {
 // Модулярний квадрат
 BigInt LongModSquare(BigInt A, BigInt N, BigInt129 mu) {
 
-    BigInt129 sqr_res = LongSquareTo129(A);
+    //BigInt129 sqr_res = LongSquareTo129(A); // щось не так :(
+    BigInt129 sqr_res = LongMulTo129(A, A);
     return BarrettReduction(sqr_res, N, mu);
 }
 

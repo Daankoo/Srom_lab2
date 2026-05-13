@@ -9,7 +9,7 @@ using namespace std;
 
 class BigInt {
 public:
-	uint32_t box64[]; // блок з 64 цифр, де кожна цифра це число розміром 32 біти
+	uint32_t box64[64]; // блок з 64 цифр, де кожна цифра це число розміром 32 біти
 
 	BigInt();
 	BigInt(uint32_t a);
@@ -24,7 +24,7 @@ public:
 
 class BigInt129 {
 public:
-	uint32_t box129[];
+	uint32_t box129[129];
 
 	BigInt129();
 	BigInt129(uint32_t a);
@@ -59,8 +59,7 @@ BigInt LongModSquare(BigInt A, BigInt N, BigInt129 mu);
 BigInt LongModPowerBarrett(BigInt A, BigInt B, BigInt N);
 
 BigInt LongModAdd(BigInt A, BigInt B, BigInt N);
-
-// 129
+BigInt LongModSub(BigInt A, BigInt B, BigInt N);
 
 BigInt129 LongAdd129(BigInt129 A, BigInt129 B);
 BigInt129 LongSub129(BigInt129 A, BigInt129 B);
